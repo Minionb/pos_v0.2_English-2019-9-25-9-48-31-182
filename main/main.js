@@ -33,7 +33,7 @@ function decodeItems(inputs){
   else{
     itemUnit = getItemUnit(itemBarCode);
   }
-  console.log(count);
+
   AllItemList.push({itemBarcode: itemBarCode, quantity: count, name: itemName, unit: itemUnit, price: itemPrice});
 })
 
@@ -68,7 +68,7 @@ function getItemUnit(itemID){
 
 function getItemPrice(itemID){
   let AllItemsInfo = loadAllItems();
-  let price = "";
+  let price ;
   AllItemsInfo.map(item =>{
     if (itemID == item["barcode"]){
       price = item["price"];
@@ -77,12 +77,19 @@ function getItemPrice(itemID){
   return price;
 }
 
+function CalculateSubtotal(item){
+  let subtotal = (item["quantity"] * item["price"]).toFixed(2);
+  return subtotal;
+}
+
+
 function printReceiptMessage(AllItemList){
   let ReceiptText = "***<store earning no money>Receipt ***\n";
   let total = 0.00;
   let subtotal = 0.00;
   AllItemList.map(item => {
-    subtotal = (item["quantity"] * item["price"]).toFixed(2);
+    //subtotal = (item["quantity"] * item["price"]).toFixed(2);
+    subtotal = CalculateSubtotal(item);
     ReceiptText += "Name：" + item["name"] +"，Quantity：" + item["quantity"] +" "+ 
     item["unit"] +"，Unit：" + item["price"] + " (yuan)，Subtotal：" + subtotal +" (yuan)\n";
     total += parseInt(subtotal);
