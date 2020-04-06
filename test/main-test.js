@@ -14,7 +14,7 @@ describe('pos', () => {
       'ITEM000001',
       'ITEM000004'
     ];
-
+    decodeItems(inputs);
     spyOn(console, 'log');
 
     printReceipt(inputs);
